@@ -256,18 +256,18 @@ def SubmissionScan():
          if not any(ext in authorWords.lower() for ext in Author_blacklist): # author isn't on our author blacklist
             if not any(ext in urlWords.lower() for ext in Site_blacklist): # subreddit isn't on our site blacklist
                if not any(ext in subredditWords.lower() for ext in Subreddit_blacklist): # subreddit isn't on our subreddit blacklist
-		              #
+		  #
                   # positive triggers - do we meet thresholds in title, url, and body for inclusion?
                   # triggers - do they meet our topic word list?
-		              # This is the "Title Gate", e.g. does the user submitted Reddit title
-		              # have at least x number of instances from our Topic_Triggers list?
+		  # This is the "Title Gate", e.g. does the user submitted Reddit title
+		  # have at least x number of instances from our Topic_Triggers list?
                   # For instance, if I used a value of "2", then we need two strings from
-		              # that list to appear to pass this test. 
+		  # that list to appear to pass this test. 
                   #
                   # recommendation: once your tests are satisfied with the title value,
                   # and a value of 2 to 3 seemed to work well for me, the next test for 
-		              # reading the body worked best with about 3x this value.
-		              #
+		  # reading the body worked best with about 3x this value.
+		  #
                   if sum (word in str(titleWords).lower() for word in Topic_Triggers) >= 2:
                      print
                      print "###"
@@ -285,11 +285,11 @@ def SubmissionScan():
                      Link = submission.url
                      f = urllib.urlopen(Link)
                      Linkcontents = f.read()
-		                 #
-		                 # second positive trigger test - reading the contents of the article!
-		                 # as mentioned, it seemed to work well with 2-3 for title, and for this
-		                 # test I seemed to have the best results with a 3x value...
-		                 #
+		     #
+		     # second positive trigger test - reading the contents of the article!
+		     # as mentioned, it seemed to work well with 2-3 for title, and for this
+		     # test I seemed to have the best results with a 3x value...
+		     #
                      if sum (word in str(Linkcontents).lower() for word in Topic_Triggers) >= 7:
                         # write a log note that we submitted something
                         # stream will dump this to log if initiated off
@@ -300,9 +300,13 @@ def SubmissionScan():
                         print
                         # submit it
                         subreddit = r.subreddit('YourSubredditName') # THE SUBREDDIT WHERE YOU ARE POSTING
-			                  # NOTE: if you do this to someone else's subreddit, they almost certainly
-		                  	# WILL NOT APPRECIATE IT, as it can be a flood of posts if you're not discrete
-	                  		# in your filtering approach. Please test in a private subreddit!
+			#
+			# NOTE: if you do this to someone else's subreddit, they almost certainly
+		        # WILL NOT APPRECIATE IT, as it can be a flood of posts if you're not discrete
+	                # in your filtering approach. Please test in a private subreddit!
+			#
+			# ask before unleashing this in someone else's subreddit.
+			#
                         subreddit.submit(
                         title=Title,
                         url=Link,
@@ -318,3 +322,4 @@ def runBot():
 while True:
     runBot()
     
+# end
